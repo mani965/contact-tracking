@@ -1,0 +1,36 @@
+public with sharing class CTPeopleTracingController {
+    public static List<People_Tracing__c> getTraces(string personId){
+
+    Return   [ SELECT Id, Contact_Date__c, Person_1__c, Person_1__r.Health_Status__c,Person_1__r.Token__c,Person_2__c,Person_2__r.Health_Status__c,Person_2__r.Token__c 
+    FROM People_Tracing__c
+    WHERE Person_1__c = :personId
+    OR Person_2__c = :personId
+    ORDER BY Contact_Date__c DESC ]; 
+
+    }
+    public static List<People_Tracing__c> checkDuplicates(List<People_Tracing__c> newPeopleTraces){
+        // unique person ids
+        Set<Id> personIds = new set<Id>();
+        for (People_Tracing__c trace : newpeopleTraces){
+    personIds.add(trace.Person_1__c);
+    personIds.add(trace.Person_2__c);
+        }
+        // list duplicate records
+        List<People_Tracing__c> duplicates = new List<People_Tracing__c>();
+        // map id and set of ids
+        Map<Id,Set<Id>> mapofExisitingRecords = new Map<Id,set<Id>>();
+        
+        // query existing records
+        List<People_Tracing__c> existingRecords = [SELECT id,Person_1__C,Person_2__c
+                                                  FROM People_Tracing__c 
+                                                  WHERE Person_1__c  IN:personIds
+                                                  OR Person_2__c IN :personIds ];
+                                 if(existingRecords != null && existingRecords.size()>0){
+                                     for(People_Tracing__c trace : existingRecords){
+
+                                     }
+                                 }    
+                               return duplicates;               
+    }
+       
+}
