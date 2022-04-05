@@ -1,17 +1,17 @@
 ({
     tabSelectHandler : function(component, event, helper) {
 
-        debugger;
+    
     const selectedTabId = event.getParam("id");
-    if(selectedTabId==='person'){
+    if(selectedTabId==="person"){
         component.set("v.headerTitle", "Person View");
     }else{
-            component.set("v.headerTitle", "Location View")
+            component.set("v.headerTitle", "Location View");
 
-        }
-        debugger;
+        };
 component.set("v.scope", selectedTabId);
     
-debugger;
+  const healthHeaderComp = component.find("health-header");
+     healthHeaderComp.fetchCount();
     }
 });
